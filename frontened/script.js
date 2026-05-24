@@ -67,6 +67,7 @@ function renderPrediction(stock, data) {
 
     document.getElementById("nextPrice").innerText = formatPrice(data.next_day_prediction);
     document.getElementById("symbolLabel").innerText = stock;
+    document.getElementById("nextDateLabel").innerText = `Forecast date: ${data.next_prediction_date || "Next trading day"}`;
     document.getElementById("latestClose").innerText = formatPrice(latestClose);
     document.getElementById("latestDate").innerText = data.dates[latestIndex] || "--";
     document.getElementById("rangeValue").innerText = `${formatPrice(low)} - ${formatPrice(high)}`;
@@ -80,6 +81,7 @@ function clearPrediction() {
     resultPanel.classList.add("hidden");
     document.getElementById("nextPrice").innerText = "--";
     document.getElementById("symbolLabel").innerText = "--";
+    document.getElementById("nextDateLabel").innerText = "--";
     document.getElementById("latestClose").innerText = "--";
     document.getElementById("latestDate").innerText = "--";
     document.getElementById("rangeValue").innerText = "--";
@@ -121,7 +123,8 @@ function renderTable(data) {
 
 function renderChart(data) {
     const ctx = document.getElementById("lineChart").getContext("2d");
-    const labels = [...data.dates, "Next day"];
+    const nextDate = data.next_prediction_date || "Next day";
+    const labels = [...data.dates, nextDate];
     const actualClose = [...data.close, null];
     const predictedClose = data.predicted_close || [];
     const projection = [...predictedClose, data.next_day_prediction];

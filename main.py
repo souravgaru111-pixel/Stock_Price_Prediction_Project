@@ -91,6 +91,7 @@ def predict(stock: str):
     raw_next_price = local_scaler.inverse_transform(pred_scaled)[0][0]
     latest_close = float(last_30["Close"].iloc[-1])
     next_price = latest_close + (float(raw_next_price) - latest_close) * PREDICTION_SMOOTHING
+    next_prediction_date = (last_30.index[-1] + pd.offsets.BDay(1)).strftime("%Y-%m-%d")
 
     return {
         "dates": last_30.index.strftime("%Y-%m-%d").tolist(),
@@ -100,5 +101,6 @@ def predict(stock: str):
         "close": last_30["Close"].round(2).tolist(),
         "volume": last_30["Volume"].tolist(),
         "predicted_close": predicted_close,
+        "next_prediction_date": next_prediction_date,
         "next_day_prediction": round(float(next_price), 2)
     }   
