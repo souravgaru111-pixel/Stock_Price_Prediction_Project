@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <link rel="stylesheet" href="/frontened/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="/frontened/script.js" defer></script>
+</head>
+<body>
+    <main class="app-shell">
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">LSTM market forecast</p>
+                <h1>Stock Price Prediction</h1>
+                <p class="hero-text">
+                    Search by symbol, review recent trading behavior, and compare the model projection against the last 30 trading days.
+                </p>
+            </div>
+
+            <form class="search-panel" id="predictionForm">
+                <label for="stockInput">Stock symbol</label>
+                <div class="search-row">
+                    <input type="text" id="stockInput" placeholder="AAPL, MSFT, RELIANCE.NS" autocomplete="off">
+                    <button type="button" id="clearButton" class="secondary-button">Clear</button>
+                    <button type="submit" id="predictButton">Predict</button>
+                </div>
+                <p id="statusMessage" class="status" role="status">Enter a stock symbol to generate a forecast.</p>
+            </form>
+        </section>
+
+        <section id="result" class="results hidden" aria-live="polite">
+            <div class="summary-grid">
+                <article class="metric-card primary">
+                    <span class="metric-label">Next predicted close</span>
+                    <strong id="nextPrice" class="metric-value">--</strong>
+                    <span id="symbolLabel" class="metric-note">--</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-label">Latest close</span>
+                    <strong id="latestClose" class="metric-value">--</strong>
+                    <span id="latestDate" class="metric-note">--</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-label">30-day range</span>
+                    <strong id="rangeValue" class="metric-value">--</strong>
+                    <span class="metric-note">Low to high</span>
+                </article>
+            </div>
+
+            <section class="chart-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Trend</p>
+                        <h2>Actual vs Predicted</h2>
+                    </div>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </section>
+
+            <section class="table-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">History</p>
+                        <h2>Last 30 Trading Days</h2>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Open</th>
+                                <th>High</th>
+                                <th>Low</th>
+                                <th>Close</th>
+                                <th>Volume</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+    </main>
+</body>
+</html>
